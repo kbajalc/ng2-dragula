@@ -17,7 +17,7 @@ const filterEvent = <T extends { name: string; }>(
   return input.pipe(
     filter(({ event, name }) => {
       return event === eventType
-          && (filterDragType === undefined || name === filterDragType);
+        && (filterDragType === undefined || name === filterDragType);
     }),
     map(({ name, args }) => projector(name, args))
   );
@@ -63,10 +63,10 @@ export class DragulaService {
 
   private elContainerSource =
     (eventType: EventTypes) =>
-    (groupName?: string) =>
-    this.dispatch$.pipe(
-      filterEvent(eventType, groupName, elContainerSourceProjector)
-    );
+      (groupName?: string) =>
+        this.dispatch$.pipe(
+          filterEvent(eventType, groupName, elContainerSourceProjector)
+        );
 
   public cancel = this.elContainerSource(EventTypes.Cancel);
   public remove = this.elContainerSource(EventTypes.Remove);
@@ -110,7 +110,7 @@ export class DragulaService {
 
   private groups: { [k: string]: Group } = {};
 
-  constructor (@Optional() private drakeFactory: DrakeFactory = null) {
+  constructor(@Optional() private drakeFactory: DrakeFactory = null) {
     if (this.drakeFactory === null) {
       this.drakeFactory = new DrakeFactory();
     }
@@ -170,7 +170,7 @@ export class DragulaService {
       this.dispatch$.next({
         event: EventTypes.RemoveModel,
         name,
-        args: [ el, container, source, item, sourceModel, dragIndex ]
+        args: [el, container, source, item, sourceModel, dragIndex]
       });
     });
     drake.on('drag', (el: any, source: any) => {
@@ -190,7 +190,8 @@ export class DragulaService {
       // console.log('DROP');
       // console.log(sourceModel);
       let item: any;
-      if (target === source) {
+      let isCopying = dragElm !== dropElm;
+      if (target === source && !isCopying) {
         sourceModel = sourceModel.slice(0)
         item = sourceModel.splice(dragIndex, 1)[0];
         sourceModel.splice(dropIndex, 0, item);
@@ -198,7 +199,6 @@ export class DragulaService {
         // but targetModel still has the old value
         targetModel = sourceModel;
       } else {
-        let isCopying = dragElm !== dropElm;
         item = sourceModel[dragIndex];
         if (isCopying) {
           if (!options.copyItem) {
@@ -216,13 +216,13 @@ export class DragulaService {
         if (isCopying) {
           try {
             target.removeChild(dropElm);
-          } catch (e) {}
+          } catch (e) { }
         }
       }
       this.dispatch$.next({
         event: EventTypes.DropModel,
         name,
-        args: [ dropElm, target, source, sibling, item, sourceModel, targetModel, dragIndex, dropIndex ]
+        args: [dropElm, target, source, sibling, item, sourceModel, targetModel, dragIndex, dropIndex]
       });
     });
   }
