@@ -1,8 +1,8 @@
 {
   "name": "ng2-dragula",
   "private": true,
-  "version": "1.5.1",
-  "main": "index.js",
+  "version": "1.5.2",
+  "main": "dist/index.js",
   "typings": "index.d.ts",
   "description": "Simple drag and drop with dragula",
   "repository": {
@@ -39,9 +39,6 @@
     "build": "ngm build -p src --clean",
     "build.watch": "ngm build -p src --watch --skip-bundles",
     "start": "ng serve --aot",
-    "pretest": "run-s lint build link",
-    "test": "ng test -sr",
-    "test-coverage": "ng test -sr -cc",
     "version": "npm run flow.changelog && git add -A"
   },
   "dependencies": {
