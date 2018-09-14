@@ -208,7 +208,7 @@ var DragulaService = (function () {
             sourceModel = drake.models[drake.containers.indexOf(source)];
             // console.log('DROP');
             // console.log(sourceModel);
-            if (target === source && !notCopy) {
+            if (target === source && notCopy) {
                 sourceModel.splice(dropIndex, 0, sourceModel.splice(dragIndex, 1)[0]);
             }
             else {
