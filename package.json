@@ -1,7 +1,7 @@
 {
   "name": "ng2-dragula",
   "private": true,
-  "version": "1.5.2",
+  "version": "1.5.3",
   "main": "dist/index.js",
   "typings": "index.d.ts",
   "description": "Simple drag and drop with dragula",
