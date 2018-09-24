@@ -709,6 +709,7 @@ function dragula(initialContainers, options) {
   var _renderTimer; // timer for setTimeout renderMirrorImage
   var _lastDropTarget = null; // last container item was over
   var _grabbed; // holds mousedown context until first mousemove
+  var _canCopyInTheSameContainer; // indicator for ability to copy in the same container
 
   var o = options || {};
   if (o.moves === void 0) { o.moves = always; }
@@ -939,7 +940,7 @@ function dragula(initialContainers, options) {
     if (_copy && o.copySortSource && target === _source) {
       parent.removeChild(_item);
     }
-    if (isInitialPlacement(target) && !_copy) {
+    if ((isInitialPlacement(target) && !_copy) || (_copy && _canCopyInTheSameContainer === false)) {
       drake.emit('cancel', item, _source, _source);
     } else {
       drake.emit('drop', item, target, _source, _currentSibling);
@@ -1039,6 +1040,8 @@ function dragula(initialContainers, options) {
   }
 
   function drag(e) {
+    _canCopyInTheSameContainer = null;
+
     if (!_mirror) {
       return;
     }
@@ -1060,6 +1063,13 @@ function dragula(initialContainers, options) {
       out();
       _lastDropTarget = dropTarget;
       over();
+    }
+
+    if (dropTarget && dropTarget === _source) {
+      _canCopyInTheSameContainer = dropTarget.hasAttribute('can-copy');
+      if (_canCopyInTheSameContainer === false) {
+        return;
+      }
     }
 
     if (dropTarget && dropTarget.hasAttribute('can-copy')) {
