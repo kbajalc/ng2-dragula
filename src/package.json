@@ -1,8 +1,8 @@
 {
   "name": "ng2-dragula",
-  "version": "1.3.1",
+  "version": "1.5.7",
   "dependencies": {
-    "dragula": "*"
+    "dragula": "github:EfimijaL/dragula"
   },
   "peerDependencies": {
     "@angular/common": "*",
